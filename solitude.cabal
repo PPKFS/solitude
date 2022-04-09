@@ -45,7 +45,7 @@ common common-options
                        -hiedir=.hie
   if impl(ghc >= 8.10)
     ghc-options:       -Wunused-packages
-  default-extensions:  GHC2021
+  default-language:    GHC2021
 
 library
   import:              common-options

@@ -31,6 +31,9 @@ module Relude
 , (%!)
 , (<<+~)
 , (<<-~)
+, eitherJoin
+, thenATraverse
+, (<$?>)
 , MonadRS) where
 
 import Relude
@@ -131,6 +134,14 @@ surroundM pre doIt post = do
   => (a -> b) -> f (g a) -> f (g b)
 (<$$>) = fmap . fmap
 
+infixl 4 <$?>
+
+(<$?>)
+  :: (a -> Bool)
+  -> Maybe a
+  -> Bool
+f <$?> m = maybe False f m
+
 prettyPrintList :: [Text] -> Text 
 prettyPrintList [] = ""
 prettyPrintList [x] = x
@@ -176,3 +187,25 @@ maybeOrReport2 c1 c2 err1 err2 f = do
     sequenceA (f <$> c1 <*> c2)
 
 type MonadRS a m = (MonadReader a m, MonadState a m)
+
+
+eitherJoin
+  :: AffineTraversal' a f
+  -> AffineTraversal' b f
+  -> AffineTraversal' (Either a b) f
+eitherJoin t1 t2 = (_Left % t1) `thenATraverse` (_Right % t2)
+
+thenATraverse
+  :: Is t1 An_AffineTraversal
+  => Is t2 An_AffineTraversal
+  => Optic t1 ix s s a b
+  -> Optic t2 ix s s a b
+  -> AffineTraversal s s a b
+thenATraverse o1 o2 = atraversal
+  ( \s -> case matching o1 s of
+      Left _ -> matching o2 s
+      Right f -> Right f
+  )
+  (\s b -> s & castOptic @An_AffineTraversal o1 .~ b
+           & castOptic @An_AffineTraversal o2 .~ b
+  )
