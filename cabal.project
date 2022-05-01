@@ -1,7 +1,6 @@
 source-repository-package
   type: git
-  location: https://github.com/TeofilC/relude.git
-  tag: 3077e34a5b4996430dc5907f951b39371e10e6dc
+  location: https://github.com/kowainik/relude.git
 
 packages: 
   ./

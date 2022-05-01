@@ -11,10 +11,11 @@ See README for more info
 module Solitude ( 
 module Relude
 , module Optics
-, module Optics.State.Operators
 , module Relude.Extra.Bifunctor
 , module Relude.Extra.Tuple
 , module Formatting
+, module Cleff
+, module Optics.Cleff
 , isPrefixOf'
 , caseM
 , wrap
@@ -27,7 +28,7 @@ module Relude
 , Text(..)
 , Reversing(..)
 , reversed
-, universeSans
+, universeSans -- UNDERTALE???
 , (%!)
 , (<<+~)
 , (<<-~)
@@ -36,9 +37,12 @@ module Relude
 , (<$?>)
 , MonadRS) where
 
-import Relude
-import Optics hiding (uncons)
-import Optics.State.Operators
+import Relude hiding (State, get, put, modify, gets, state, modify')
+import Optics hiding 
+  (uncons, zoom, gviews, zoomMaybe, use, gview, preuse, modifying', modifying, assign', assign)
+import Cleff.State
+import Cleff
+import Optics.Cleff hiding (ViewableOptic, ViewResult)
 import qualified Data.Text as T
 import Relude.Extra.Bifunctor
 import Relude.Extra.Tuple
@@ -172,6 +176,8 @@ infixr 4 <<+~, <<-~
   -> (a, s)
 (<<-~) l b s = (s ^. l, s & l %~ (\x -> x - b))
 {-# INLINE (<<-~) #-}
+
+
 
 maybeOrReport2
   :: Monad m
