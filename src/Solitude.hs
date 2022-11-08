@@ -8,14 +8,14 @@ See README for more info
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Solitude (
+module Solitude ( 
 module Relude
 , module Optics
 , module Relude.Extra.Bifunctor
 , module Relude.Extra.Tuple
-, module Effectful
-, module Effectful.State.Dynamic
-, module Text.Interpolation.Nyan
+, module Formatting
+, module Cleff
+, module Optics.Cleff
 , isPrefixOf'
 , caseM
 , wrap
@@ -25,8 +25,8 @@ module Relude
 , (<$$>)
 , prettyPrintList
 , bothAnd
+, Text(..)
 , Reversing(..)
-, Buildable
 , reversed
 , universeSans -- UNDERTALE???
 , (%!)
@@ -38,18 +38,19 @@ module Relude
 , MonadRS) where
 
 import Relude hiding (State, get, put, modify, gets, state, modify', runState, evalState, execState)
-import Optics hiding
+import Optics hiding 
   (uncons, zoom, gviews, zoomMaybe, use, gview, preuse, modifying', modifying, assign', assign)
-import Effectful
+import Cleff.State
+import Cleff
+import Optics.Cleff hiding (ViewableOptic, ViewResult)
 import qualified Data.Text as T
 import Relude.Extra.Bifunctor
 import Relude.Extra.Tuple
-import Effectful.State.Dynamic
+import qualified Data.Text
 import Formatting hiding ((%), now, text)
 import qualified Formatting as F
 import qualified Data.List.NonEmpty as NonEmpty
 import Data.List ((\\))
-import Text.Interpolation.Nyan
 
   -- | Obtain a list of all members of a type universe, sans a finite list
 universeSans
@@ -83,7 +84,7 @@ bothAnd ::
 bothAnd a1 a2 f = f a1 && f a2
 
 -- | generalised version of `isPrefixOf` for when the lists are of different types
-isPrefixOf' ::
+isPrefixOf' :: 
   (a -> b -> Bool)
   -> [a]
   -> [b]
@@ -145,7 +146,7 @@ infixl 4 <$?>
   -> Bool
 f <$?> m = maybe False f m
 
-prettyPrintList :: [Text] -> Text
+prettyPrintList :: [Text] -> Text 
 prettyPrintList [] = ""
 prettyPrintList [x] = x
 prettyPrintList [x, y] = x <> ", and " <> y

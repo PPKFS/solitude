@@ -26,10 +26,9 @@ common common-options
                      , relude
                      , optics
                      , formatting
-                     , effectful
-                     , effectful-core
-                     , nyan-interpolation
-
+                     , cleff
+                     , cleff-optics
+                     
   ghc-options:         -Wall
                        -Wcompat
                        -Widentities
