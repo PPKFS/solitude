@@ -28,6 +28,7 @@ common common-options
                      , formatting
                      , effectful
                      , nyan-interpolation
+                     , text-display
 
   ghc-options:         -Wall
                        -Wcompat

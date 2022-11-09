@@ -17,6 +17,7 @@ module Relude
 , module Effectful.State.Dynamic
 , module Text.Interpolation.Nyan
 , module Formatting.Buildable
+, module Data.Text.Display
 , isPrefixOf'
 , caseM
 , wrap
@@ -26,7 +27,6 @@ module Relude
 , (<$$>)
 , prettyPrintList
 , bothAnd
-, Text(..)
 , Reversing(..)
 , reversed
 , universeSans -- UNDERTALE???
@@ -45,7 +45,7 @@ import Effectful
 import qualified Data.Text as T
 import Relude.Extra.Bifunctor
 import Relude.Extra.Tuple
-import qualified Data.Text
+import Data.Text.Display hiding (Opaque)
 import qualified Formatting as F
 import qualified Data.List.NonEmpty as NonEmpty
 import Data.List ((\\))
