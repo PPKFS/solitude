@@ -26,7 +26,6 @@ common common-options
                      , relude
                      , optics
                      , formatting
-                     , effectful
                      , text-display
 
   ghc-options:         -Wall

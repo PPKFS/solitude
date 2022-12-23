@@ -13,8 +13,6 @@ module Relude
 , module Optics
 , module Relude.Extra.Bifunctor
 , module Relude.Extra.Tuple
-, module Effectful
-, module Effectful.State.Dynamic
 , module Formatting.Buildable
 , module Data.Text.Display
 , isPrefixOf'
@@ -37,10 +35,8 @@ module Relude
 , (<$?>)
 , MonadRS) where
 
-import Relude hiding (State, get, put, modify, gets, state, modify', runState, evalState, execState)
-import Optics hiding
-  (uncons, zoom, gviews, zoomMaybe, use, gview, preuse, modifying', modifying, assign', assign)
-import Effectful
+import Relude
+import Optics hiding ( uncons )
 import qualified Data.Text as T
 import Relude.Extra.Bifunctor
 import Relude.Extra.Tuple
@@ -48,7 +44,6 @@ import Data.Text.Display hiding (Opaque)
 import qualified Formatting as F
 import qualified Data.List.NonEmpty as NonEmpty
 import Data.List ((\\))
-import Effectful.State.Dynamic
 import Formatting.Buildable
 
   -- | Obtain a list of all members of a type universe, sans a finite list
