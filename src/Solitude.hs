@@ -15,7 +15,6 @@ module Relude
 , module Relude.Extra.Tuple
 , module Effectful
 , module Effectful.State.Dynamic
-, module Text.Interpolation.Nyan
 , module Formatting.Buildable
 , module Data.Text.Display
 , isPrefixOf'
@@ -50,7 +49,6 @@ import qualified Formatting as F
 import qualified Data.List.NonEmpty as NonEmpty
 import Data.List ((\\))
 import Effectful.State.Dynamic
-import Text.Interpolation.Nyan
 import Formatting.Buildable
 
   -- | Obtain a list of all members of a type universe, sans a finite list

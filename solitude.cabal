@@ -27,7 +27,6 @@ common common-options
                      , optics
                      , formatting
                      , effectful
-                     , nyan-interpolation
                      , text-display
 
   ghc-options:         -Wall
