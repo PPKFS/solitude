@@ -19,16 +19,13 @@ extra-doc-files:     README.md
 
 source-repository head
   type:                git
-  location:            https://github.com/PPK/solitude.git
+  location:            https://github.com/PPKFS/solitude.git
 
 common common-options
   build-depends:       base
                      , relude
                      , optics
-                     , formatting
                      , effectful
-                     , nyan-interpolation
-                     , text-display
 
   ghc-options:         -Wall
                        -Wcompat
@@ -37,6 +34,7 @@ common common-options
                        -Wincomplete-record-updates
                        -Wredundant-constraints
                        -Wnoncanonical-monad-instances
+                       -Werror
   if impl(ghc >= 8.2)
     ghc-options:       -fhide-source-paths
   if impl(ghc >= 8.4)
@@ -53,8 +51,8 @@ common common-options
                        ConstraintKinds
                        FlexibleContexts
                        TypeOperators
-
 library
   import:              common-options
   hs-source-dirs:      src
   exposed-modules:     Solitude
+                       Effectful.Optics

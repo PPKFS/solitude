@@ -15,9 +15,6 @@ module Relude
 , module Relude.Extra.Tuple
 , module Effectful
 , module Effectful.State.Dynamic
-, module Text.Interpolation.Nyan
-, module Formatting.Buildable
-, module Data.Text.Display
 , isPrefixOf'
 , caseM
 , wrap
@@ -30,13 +27,12 @@ module Relude
 , Reversing(..)
 , reversed
 , universeSans -- UNDERTALE???
-, (%!)
 , (<<+~)
 , (<<-~)
 , eitherJoin
 , thenATraverse
 , (<$?>)
-, MonadRS) where
+) where
 
 import Relude hiding (State, get, put, modify, gets, state, modify', runState, evalState, execState)
 import Optics hiding
@@ -45,13 +41,9 @@ import Effectful
 import qualified Data.Text as T
 import Relude.Extra.Bifunctor
 import Relude.Extra.Tuple
-import Data.Text.Display hiding (Opaque)
-import qualified Formatting as F
-import qualified Data.List.NonEmpty as NonEmpty
 import Data.List ((\\))
 import Effectful.State.Dynamic
-import Text.Interpolation.Nyan
-import Formatting.Buildable
+import qualified Data.List.NonEmpty as NonEmpty
 
   -- | Obtain a list of all members of a type universe, sans a finite list
 universeSans
@@ -73,9 +65,6 @@ reversed = involuted reversing
 
 instance Reversing [a] where
   reversing = reverse
-
-(%!) :: F.Format r a -> F.Format r' r -> F.Format r' a
-(%!) = (F.%)
 
 bothAnd ::
   a
@@ -127,14 +116,14 @@ surroundM
   -> m b -- ^ what to do
   -> (a -> m c) -- ^ how to take it apart again
   -> m b
-surroundM pre doIt post = do
-  p' <- pre
+surroundM pre' doIt post = do
+  p' <- pre'
   r <- doIt
   _ <- post p'
   return r
 
-(<$$>)
-  :: Functor f
+(<$$>) ::
+  Functor f
   => Functor g
   => (a -> b) -> f (g a) -> f (g b)
 (<$$>) = fmap . fmap
@@ -177,24 +166,6 @@ infixr 4 <<+~, <<-~
   -> (a, s)
 (<<-~) l b s = (s ^. l, s & l %~ (\x -> x - b))
 {-# INLINE (<<-~) #-}
-
-
-
-maybeOrReport2
-  :: Monad m
-  => Maybe a
-  -> Maybe b
-  -> m ()
-  -> m ()
-  -> (a -> b -> m c)
-  -> m (Maybe c)
-maybeOrReport2 c1 c2 err1 err2 f = do
-    when (isNothing c1) err1
-    when (isNothing c2) err2
-    sequenceA (f <$> c1 <*> c2)
-
-type MonadRS a m = (MonadReader a m, MonadState a m)
-
 
 eitherJoin
   :: AffineTraversal' a f
