@@ -39,7 +39,6 @@ import Optics.State.Operators ( PermeableOptic(..) )
 (%=) = (modify .) . over
 
 use ::
-
   forall s a es is k.
   (Is k A_Getter, State s :> es)
   => Optic' k is s a
